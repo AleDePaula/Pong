@@ -1,0 +1,24 @@
+using Unity.VisualScripting;
+using UnityEngine;
+
+public class GameManager : MonoBehaviour
+{
+    
+    public static GameManager instance;
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+    
+    public int playerScore;
+    public int enemyScore;
+    public float ballSpeed;
+    
+}
