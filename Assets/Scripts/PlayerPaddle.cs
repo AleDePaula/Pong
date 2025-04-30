@@ -5,11 +5,13 @@ public class PlayerPaddle : MonoBehaviour
 {
     private float paddleSpeed = 10f;
     public Rigidbody2D rb;
+    public GameManager gameManager;
 
 
     private void Start()
     {
-        rb = GetComponent<Rigidbody2D>();        
+        rb = GetComponent<Rigidbody2D>();  
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();      
     
     }
 
@@ -25,8 +27,16 @@ public class PlayerPaddle : MonoBehaviour
             rb.position = new Vector2(rb.position.x, -4.0f);
         }
         
-    }
+    }    
+    private void OnCollisionEnter2D(Collision2D collision)
+    {       
     
+        if (collision.gameObject.name == "Ball")
+        {
+            gameManager.enemyCanMove = true;
+            print(gameManager.enemyCanMove);
+        }
+    }
     private void movePaddle()
     {
         float moveInput = Input.GetAxis("Vertical");

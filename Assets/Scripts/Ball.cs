@@ -2,12 +2,12 @@ using UnityEngine;
 
 public class Ball : MonoBehaviour
 {
-    private Rigidbody2D rb;
-    private Collider2D col;
+    private Rigidbody2D rb;    
     private Vector2 ballDirection;
     private float ballSpeed;
     private Vector2 ballInitialPosition;
-    private GameManager gameManager;
+    private GameManager gameManager;    
+
     private void Awake()
     {
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
@@ -16,7 +16,7 @@ public class Ball : MonoBehaviour
 
     void Start()
     {
-        ballSpeed = gameManager.initialBallSpeed;
+        ballSpeed = gameManager.initialBallSpeed;        
         ResetBall();     
     }
 
@@ -49,17 +49,26 @@ public class Ball : MonoBehaviour
         this.transform.position = ballInitialPosition;
         ballSpeed = gameManager.initialBallSpeed;
         
-        ballDirection = GetDirection();
+        ballDirection = GetBallDirection();
        
         rb.linearVelocity = ballDirection * ballSpeed;
+
+        gameManager.enemyCanMove = true;
     }
 
     void Update()
     {
        rb.linearVelocity = ballDirection * ballSpeed;
+       
+       
     }
 
-    private Vector2 GetDirection()
+    void FixedUpdate()
+    {
+        gameManager.ballPosition = rb.position;
+    }
+
+    private Vector2 GetBallDirection()
     {
         bool right = Random.value < 0.5f;
         float angle;
@@ -68,7 +77,7 @@ public class Ball : MonoBehaviour
             if(Random.value > 0.5f)
                 angle = Random.Range(30f, 60f);
             else
-                angle = Random.Range(30f, 60f);
+                angle = Random.Range(290f, 320f);
         }
         else
         {
