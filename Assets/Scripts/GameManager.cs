@@ -1,7 +1,11 @@
 using UnityEngine;
+using TMPro;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager instance;
+
     private void Awake()
     {
         if (instance == null)
@@ -15,7 +19,9 @@ public class GameManager : MonoBehaviour
     }
 
     //References:    
-    public static GameManager instance;
+    public static GameObject UI;
+    public static GameObject playerScoreText;
+    public static GameObject enemyScoreText;
 
 
     // Score variables
@@ -46,6 +52,8 @@ public class GameManager : MonoBehaviour
         playerScore = 0;
         enemyScore = 0;
         enemyCanMove = true;
+        playerScoreText = GameObject.Find("PlayerScore");
+        enemyScoreText = GameObject.Find("EnemyScore");      
         
     }
 
@@ -53,12 +61,17 @@ public class GameManager : MonoBehaviour
     {
         if (sideScored == "LeftBorder")
         {
-            enemyScore++;
+            enemyScore++;            
+            enemyScoreText.GetComponent<TextMeshProUGUI>().text = enemyScore.ToString();
+            
+            
             
         }
         else if (sideScored == "RightBorder")
         {
             playerScore++;
+            playerScoreText.GetComponent<TextMeshProUGUI>().text = playerScore.ToString();
+            
             
         }
     }    
