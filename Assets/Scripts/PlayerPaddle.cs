@@ -34,7 +34,7 @@ public class PlayerPaddle : MonoBehaviour
         if (collision.gameObject.name == "Ball")
         {
             gameManager.enemyCanMove = true;
-            print(gameManager.enemyCanMove);
+            
         }
     }
     private void movePaddle()

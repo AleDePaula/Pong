@@ -25,17 +25,20 @@ public class Ball : MonoBehaviour
         if(collision.gameObject.name=="LeftBorder" || collision.gameObject.name=="RightBorder")
         {
             gameManager.Score(collision.gameObject.name);
+            gameManager.PlayScoreSound();
             ResetBall();
         }
         else if(collision.gameObject.name=="TopBorder" || collision.gameObject.name=="BottomBorder")
         {
             ballDirection.y = -1*ballDirection.y;
+            gameManager.PlayWallSound();
             
         }
         else if(collision.gameObject.name=="PlayerPaddle" || collision.gameObject.name=="EnemyPaddle")        {
             
             ballDirection.x = -1*ballDirection.x;
             ballSpeed += 0.5f;
+            gameManager.PlayPaddleSound();
             if(ballSpeed > gameManager.maxBallSpeed)
             {
                 ballSpeed = gameManager.maxBallSpeed;
@@ -58,8 +61,7 @@ public class Ball : MonoBehaviour
 
     void Update()
     {
-       rb.linearVelocity = ballDirection * ballSpeed;
-       
+       rb.linearVelocity = ballDirection * ballSpeed;       
        
     }
 

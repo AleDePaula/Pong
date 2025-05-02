@@ -1,6 +1,5 @@
 using UnityEngine;
 using TMPro;
-using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -20,8 +19,8 @@ public class GameManager : MonoBehaviour
 
     //References:    
     public static GameObject UI;
-    public static GameObject playerScoreText;
-    public static GameObject enemyScoreText;
+    public static TextMeshProUGUI playerScoreText;
+    public static TextMeshProUGUI enemyScoreText;
 
 
     // Score variables
@@ -43,6 +42,11 @@ public class GameManager : MonoBehaviour
     //Enemy Paddle variables
     public bool enemyCanMove;
 
+    // Sound variables
+    public AudioSource paddleSound;
+    public AudioSource wallSound;
+    public AudioSource scoreSound;
+    public AudioSource gameOverSound;
 
     //Functions
     private void Start()
@@ -52,8 +56,13 @@ public class GameManager : MonoBehaviour
         playerScore = 0;
         enemyScore = 0;
         enemyCanMove = true;
-        playerScoreText = GameObject.Find("PlayerScore");
-        enemyScoreText = GameObject.Find("EnemyScore");      
+        playerScoreText = GameObject.Find("PlayerScore").GetComponent<TextMeshProUGUI>();
+        enemyScoreText = GameObject.Find("EnemyScore").GetComponent<TextMeshProUGUI>(); 
+
+        paddleSound = GameObject.Find("PaddleSound").GetComponent<AudioSource>();
+        wallSound = GameObject.Find("WallSound").GetComponent<AudioSource>();
+        scoreSound = GameObject.Find("ScoreSound").GetComponent<AudioSource>();
+        gameOverSound = GameObject.Find("GameOverSound").GetComponent<AudioSource>();     
         
     }
 
@@ -62,7 +71,7 @@ public class GameManager : MonoBehaviour
         if (sideScored == "LeftBorder")
         {
             enemyScore++;            
-            enemyScoreText.GetComponent<TextMeshProUGUI>().text = enemyScore.ToString();
+            enemyScoreText.text = enemyScore.ToString();
             
             
             
@@ -70,10 +79,30 @@ public class GameManager : MonoBehaviour
         else if (sideScored == "RightBorder")
         {
             playerScore++;
-            playerScoreText.GetComponent<TextMeshProUGUI>().text = playerScore.ToString();
+            playerScoreText.text = playerScore.ToString();
             
             
         }
-    }    
+    }
+
+    //Sound manager
+
+    public void PlayPaddleSound()
+    {
+        paddleSound.Play();
+        
+    }
+    public void PlayWallSound()
+    {
+        wallSound.Play();
+    }
+    public void PlayScoreSound()
+    {
+        scoreSound.Play();
+    }
+    public void PlayGameOverSound()
+    {
+        gameOverSound.Play();
+    }
     
 }
